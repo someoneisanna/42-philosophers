@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:29:02 by ataboada          #+#    #+#             */
-/*   Updated: 2023/07/24 16:27:49 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:28:32 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+# define TRUE 1
+# define FALSE 0
+
 typedef struct s_philo
 {
 	int				id;
-	int				fork_l;
-	int				fork_r;
+	int				fork_left;
+	int				fork_right;
 	int				times_eaten;
 	long long		last_eaten;
 	struct s_data	*data;
@@ -39,7 +42,7 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				times_must_eat;
-	int				philo_is_full;
+	int				n_philo_full;
 	int				end_flag;
 	long long		start_time;
 	t_philo			*philo;
@@ -59,25 +62,24 @@ void		ft_initialize_data(t_data *data, int ac, char **av);
 void		ft_initialize_mtxs(t_data *data);
 void		ft_initialize_philo(t_data *data);
 void		ft_initialize_thread(t_data *data);
+void		*ft_start_simulation(void *philo);
 
-// ---------------------------- 3_simulation_utils.c ---------------------------
+// ----------------------------- 3_surveillance.c ------------------------------
 
-int			ft_only_one_philo(t_data *data);
-int			ft_should_simulation_end(t_philo *philo, int end_flag);
-void		ft_eat(t_philo *philo);
+void		ft_surveillance(t_data *data);
+int			ft_is_philo_dead_or_full(t_data *data, t_philo *philo);
+
+// ---------------------------- 4_simulation_utils.c ---------------------------
+
+int			ft_should_simulation_end(t_philo *philo, int should_end);
 void		ft_print_status(t_philo *philo, char *str);
-void		ft_skip_to_time(t_philo *philo, long long timetravel_dest);
-
-// ---------------------------- 4_surveillance.c -------------------------------
-
-void		ft_simulation_surveillance(t_data *data);
-int			ft_philo_dead_or_full(t_philo *philo);
+void		ft_eat(t_philo *philo);
 
 // --------------------------------- 5_utils.c ---------------------------------
 
 int			ft_atoi(const char *str);
 void		ft_perror(char *str, t_data *data, int flag);
-void		ft_free_mtxs_and_join_threads(t_data *data, int flag);
+void		ft_free_mtxs(t_data *data);
 long long	ft_get_current_time(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:38:15 by ataboada          #+#    #+#             */
-/*   Updated: 2023/07/24 16:59:20 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/07/26 09:12:23 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	main(int argc, char **argv)
 	ft_initialize_data(&data, argc, argv);
 	ft_initialize_philo(&data);
 	ft_initialize_mtxs(&data);
-	//ft_initialize_thread(&data);
-	//ft_simulation_surveillance(&data);
+	ft_initialize_thread(&data);
+	ft_free_mtxs(&data);
 }
 
 void	ft_check_args(int ac, char **av)

@@ -10,15 +10,15 @@ RESET = \033[0m
 NAME = philo
 
 CC = cc
-CFLAGS = -pthread -Wall -Wextra -Werror
+CFLAGS = -pthread -Wall -Wextra -Werror -g
 
 RM = rm -f
 MAKE = make --no-print-directory
 
 SRCS = sources/1_main.c \
 		sources/2_initializations.c \
-		sources/3_simulation_utils.c \
-		sources/4_surveillance.c \
+		sources/3_surveillance.c \
+		sources/4_simulation_utils.c \
 		sources/5_utils.c
 S_OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 11:40:05 by ataboada          #+#    #+#             */
-/*   Updated: 2023/07/24 17:15:19 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:51:29 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int			ft_atoi(const char *str);
 void		ft_perror(char *str, t_data *data, int flag);
-void		ft_free_mtxs_and_join_threads(t_data *data, int flag);
+void		ft_free_mtxs(t_data *data);
 long long	ft_get_current_time(void);
+
 
 // this is a function that will convert a string to an integer
 int	ft_atoi(const char *str)
@@ -50,38 +51,35 @@ void	ft_perror(char *str, t_data *data, int flag)
 	if (flag == 1)
 		free(data->philo);
 	if (flag == 2)
-		free(data->mtx_fork);
-	if (flag == 3)
 	{
 		free(data->philo);
 		free(data->mtx_fork);
 	}
-	if (flag == 4)
-		ft_free_mtxs_and_join_threads(data, 4);
-	if (flag == 5)
-		ft_free_mtxs_and_join_threads(data, 5);
+	if (flag == 3)
+		ft_free_mtxs(data);
 	exit (1);
 }
 
 // this is a function that will free the mutexes and the join the threads
-void	ft_free_mtxs_and_join_threads(t_data *data, int flag)
+void	ft_free_mtxs(t_data *data)
 {
 	int	i;
 
 	i = -1;
-	if (flag == 5)
+	if (data->philo)
+		free(data->philo);
+	if (data->mtx_fork)
 	{
 		while (++i < data->n_philo)
-			pthread_join(data->philo[i].thread, NULL);
+			pthread_mutex_destroy(&data->mtx_fork[i]);
+		free(data->mtx_fork);
 	}
-	i = -1;
-	while (++i < data->n_philo)
-		pthread_mutex_destroy(&data->mtx_fork[i]);
-	free(data->philo);
-	free(data->mtx_fork);
-	pthread_mutex_destroy(&data->mtx_print);
-	pthread_mutex_destroy(&data->mtx_eat);
-	pthread_mutex_destroy(&data->mtx_end);
+	if (&data->mtx_print)
+		pthread_mutex_destroy(&data->mtx_print);
+	if (&data->mtx_eat)
+		pthread_mutex_destroy(&data->mtx_eat);
+	if (&data->mtx_end)
+		pthread_mutex_destroy(&data->mtx_end);
 }
 
 // this is a function that will return the current time in milliseconds
