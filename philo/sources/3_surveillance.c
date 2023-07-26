@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:10:36 by ataboada          #+#    #+#             */
-/*   Updated: 2023/07/26 10:31:57 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/07/26 13:07:06 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	ft_surveillance(t_data *data);
 int		ft_is_philo_dead_or_full(t_data *data, t_philo *philo);
+
+// this function is used to check if the simulation has ended or not
+// remember: the simulation ends once a philosopher dies or all philosophers have eaten
 
 void	ft_surveillance(t_data *data)
 {
@@ -32,6 +35,10 @@ void	ft_surveillance(t_data *data)
 		usleep(10);
 	}
 }
+
+// here we check if any philosopher has died and count how many philosophers have eaten
+// we also check if the number of philosophers that have eaten is equal to the number of
+// philosophers, which would mean that we should end the simulation
 
 int	ft_is_philo_dead_or_full(t_data *data, t_philo *philo)
 {

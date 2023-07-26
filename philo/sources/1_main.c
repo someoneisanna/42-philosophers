@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:38:15 by ataboada          #+#    #+#             */
-/*   Updated: 2023/07/26 09:12:23 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/07/26 13:01:28 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int argc, char **argv)
 	ft_free_mtxs(&data);
 }
 
+// here we check if we are passing the right number of int arguments
 void	ft_check_args(int ac, char **av)
 {
 	int	i;
