@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:29:02 by ataboada          #+#    #+#             */
-/*   Updated: 2023/07/26 11:28:32 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/08/06 15:27:33 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		*ft_start_simulation(void *philo);
 // ----------------------------- 3_surveillance.c ------------------------------
 
 void		ft_surveillance(t_data *data);
-int			ft_is_philo_dead_or_full(t_data *data, t_philo *philo);
+int			ft_dead_or_full(t_data *data, t_philo *philo);
 
 // ---------------------------- 4_simulation_utils.c ---------------------------
 

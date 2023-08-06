@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 11:40:05 by ataboada          #+#    #+#             */
-/*   Updated: 2023/07/26 11:51:29 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/08/06 15:31:30 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int			ft_atoi(const char *str);
 void		ft_perror(char *str, t_data *data, int flag);
 void		ft_free_mtxs(t_data *data);
 long long	ft_get_current_time(void);
-
 
 // this is a function that will convert a string to an integer
 int	ft_atoi(const char *str)
@@ -44,7 +43,8 @@ int	ft_atoi(const char *str)
 	return (sig * res);
 }
 
-// this is a function the will print the error, free allocated memory and exit the program
+// this is a function the will print the error, free allocated memory and exit
+// the program
 void	ft_perror(char *str, t_data *data, int flag)
 {
 	printf("%s", str);
@@ -74,17 +74,14 @@ void	ft_free_mtxs(t_data *data)
 			pthread_mutex_destroy(&data->mtx_fork[i]);
 		free(data->mtx_fork);
 	}
-	if (&data->mtx_print)
-		pthread_mutex_destroy(&data->mtx_print);
-	if (&data->mtx_eat)
-		pthread_mutex_destroy(&data->mtx_eat);
-	if (&data->mtx_end)
-		pthread_mutex_destroy(&data->mtx_end);
+	pthread_mutex_destroy(&data->mtx_print);
+	pthread_mutex_destroy(&data->mtx_eat);
+	pthread_mutex_destroy(&data->mtx_end);
 }
 
 // this is a function that will return the current time in milliseconds
-// we return the number of seconds multiplied by 1000 to get milliseconds and then the
-// number of microseconds divided by 1000 to get the remaining miliseconds
+// we return the number of seconds x1000 to get number of miliseconds
+// plus the number of microseconds /1000 to get the remaining miliseconds
 long long	ft_get_current_time(void)
 {
 	struct timeval	current_time;

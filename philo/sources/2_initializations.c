@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:24:38 by ataboada          #+#    #+#             */
-/*   Updated: 2023/07/26 11:49:35 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/08/06 15:21:13 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,28 @@ void	ft_initialize_thread(t_data *data);
 void	*ft_start_simulation(void *philo);
 
 // this is where we initialize the data structure
-void	ft_initialize_data(t_data *data, int ac, char **av)
+void	ft_initialize_data(t_data *d, int ac, char **av)
 {
-	data->n_philo = ft_atoi(av[1]);
-	data->time_to_die = ft_atoi(av[2]);
-	data->time_to_eat = ft_atoi(av[3]);
-	data->time_to_sleep = ft_atoi(av[4]);
+	d->n_philo = ft_atoi(av[1]);
+	d->time_to_die = ft_atoi(av[2]);
+	d->time_to_eat = ft_atoi(av[3]);
+	d->time_to_sleep = ft_atoi(av[4]);
 	if (ac == 6)
-		data->times_must_eat = ft_atoi(av[5]);
+		d->times_must_eat = ft_atoi(av[5]);
 	else
-		data->times_must_eat = 0;
-	data->n_philo_full = 0;
-	data->end_flag = 0;
-	data->start_time = ft_get_current_time();
-	data->philo = malloc(sizeof(t_philo) * data->n_philo);
-	if (!data->philo)
-		ft_perror("Error: Creation of the PHILO MALLOC failed\n", data, 1);
-	if (data->n_philo < 1)
-		ft_perror("Error: There must be at least one philosopher\n", data, 1);
-	if (data->time_to_die < 1 || data->time_to_eat < 1 || data->time_to_sleep < 1)
-		ft_perror("Error: Time arguments must be greater than 0\n", data, 1);
-	if (ac == 6 && data->times_must_eat < 1)
-		ft_perror("Error: If it exists, the last argument must be greater than 0\n", data, 1);
+		d->times_must_eat = 0;
+	d->n_philo_full = 0;
+	d->end_flag = 0;
+	d->start_time = ft_get_current_time();
+	d->philo = malloc(sizeof(t_philo) * d->n_philo);
+	if (!d->philo)
+		ft_perror("Error: Creation of the PHILO MALLOC failed\n", d, 1);
+	if (d->n_philo < 1)
+		ft_perror("Error: There must be at least one philosopher\n", d, 1);
+	if (d->time_to_die < 1 || d->time_to_eat < 1 || d->time_to_sleep < 1)
+		ft_perror("Error: Time arguments must be greater than 0\n", d, 1);
+	if (ac == 6 && d->times_must_eat < 1)
+		ft_perror("Error: If it exists, the last arg must be > 0\n", d, 1);
 }
 
 // this is where we initialize the mutexes that are in the data struct
@@ -91,7 +91,8 @@ void	ft_initialize_thread(t_data *data)
 	i = -1;
 	while (++i < data->n_philo)
 	{
-		if (pthread_create(&data->philo[i].thread, NULL, ft_start_simulation, &data->philo[i]) != 0)
+		if (pthread_create(&data->philo[i].thread, NULL,
+				ft_start_simulation, &data->philo[i]) != 0)
 			ft_perror("Error: Creation of the thread failed\n", data, 3);
 	}
 	ft_surveillance(data);
@@ -103,7 +104,7 @@ void	ft_initialize_thread(t_data *data)
 	}
 }
 
-// this is the function that will be executed by the threads for each of the philosophers
+// this is the function that will be executed by the threads for each philo
 void	*ft_start_simulation(void *ptr)
 {
 	t_philo	*philo;

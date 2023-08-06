@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 16:53:36 by ataboada          #+#    #+#             */
-/*   Updated: 2023/07/26 13:10:35 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/08/06 15:22:47 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ int	ft_should_simulation_end(t_philo *philo, int should_end)
 	return (FALSE);
 }
 
-// this is used to print the status of the philosopher (the sentences that are printed in the subject)
-// if we don't pass a string, it means that all philosophers have eaten the number of times they should
+// this is used to print the status of the philosopher (the sentences that are
+// printed in the subject)
+// if we don't pass a string, it means that all philosophers have eaten the
+// number of times they should
 void	ft_print_status(t_philo *philo, char *str)
 {
 	long long	timestamp;
@@ -44,7 +46,7 @@ void	ft_print_status(t_philo *philo, char *str)
 		printf("%lld %d %s\n", timestamp, philo->id, str);
 	}
 	if (str == NULL)
-		printf("All philosophers have eaten %d times\n", philo->data->times_must_eat);
+		printf("All philos have eaten %d times\n", philo->data->times_must_eat);
 	pthread_mutex_unlock(&philo->data->mtx_print);
 }
 

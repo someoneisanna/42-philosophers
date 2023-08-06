@@ -37,7 +37,7 @@ $(NAME): $(S_OBJS)
 
 %.o : %.c
 	@$(CC) $(CFLAGS) -c $< -o $@ -I.
-	@printf "$(PURPLE)	Compiling$(RESET) $<\n"
+	@printf "$(PURPLE)	Compiled$(RESET) $<\n"
 
 clean:
 	@$(RM) $(S_OBJS)
