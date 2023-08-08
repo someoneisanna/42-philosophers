@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:24:38 by ataboada          #+#    #+#             */
-/*   Updated: 2023/08/06 15:21:13 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:27:22 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,23 @@ void	ft_initialize_philo(t_data *data);
 void	ft_initialize_thread(t_data *data);
 void	*ft_start_simulation(void *philo);
 
-// this is where we initialize the data structure
+/*
+	here all of the struct variables are being initialized and the threads being created
+	1) we initialize the data struct and check if the arguments are correct
+	2) we initialize the mutexes that are in the data struct
+	3) we initialize the philo struct
+	4) we create the threads that make the program work
+		- we create a thread for each philosopher with pthread_create
+		- ft_start_simulation is the function that each thread will execute
+		- for each thread, we check if any philosopher starved or all ate enough
+	5) the ft_start_simulation function is the one being performed by the threads
+		- first, we put the even philosophers to wait for their turn to eat
+		- we then create a condition for when there is only one philosopher
+		- we then check if we should end the simulation (one starved or all ate enough)
+		- if not, we continue on with the philo tasks: eating, sleeping, thinking
+		- lastly, we put the odd philosophers to wait for their turn to eat
+*/
+
 void	ft_initialize_data(t_data *d, int ac, char **av)
 {
 	d->n_philo = ft_atoi(av[1]);
@@ -43,7 +59,6 @@ void	ft_initialize_data(t_data *d, int ac, char **av)
 		ft_perror("Error: If it exists, the last arg must be > 0\n", d, 1);
 }
 
-// this is where we initialize the mutexes that are in the data struct
 void	ft_initialize_mtxs(t_data *data)
 {
 	int	i;
@@ -65,7 +80,6 @@ void	ft_initialize_mtxs(t_data *data)
 		ft_perror("Error: Creation of the END MUTEX failed\n", data, 2);
 }
 
-// this is where we initialize the philo structure
 void	ft_initialize_philo(t_data *data)
 {
 	int	i;
@@ -83,7 +97,6 @@ void	ft_initialize_philo(t_data *data)
 	}
 }
 
-// this is where we initialize the threads that are in the philo struct
 void	ft_initialize_thread(t_data *data)
 {
 	int	i;
@@ -104,7 +117,6 @@ void	ft_initialize_thread(t_data *data)
 	}
 }
 
-// this is the function that will be executed by the threads for each philo
 void	*ft_start_simulation(void *ptr)
 {
 	t_philo	*philo;

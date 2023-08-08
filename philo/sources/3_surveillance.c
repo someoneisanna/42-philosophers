@@ -6,17 +6,25 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:10:36 by ataboada          #+#    #+#             */
-/*   Updated: 2023/08/06 15:30:06 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:42:55 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-void	ft_surveillance(t_data *data);
-int		ft_dead_or_full(t_data *data, t_philo *philo);
+void	ft_surveillance(t_data *d);
+int		ft_dead_or_full(t_data *d, t_philo *p);
 
-// this function is used to check if the simulation has ended or not
-// note: the simulation ends once a philo dies or all philos have eaten
+/*
+	here is where we check when it's time to end the simulation
+	1) ft_surveillance: used to check if the simulation should end or not
+		- we can pass a value to the function to set the simulation to end
+		- or we can check it by seeing if any philo has died or all have eaten
+	2) ft_dead_or_full: used to check if any philo has died or all have eaten
+		- if any philo has died, we set the simulation to end
+		- if all philos have eaten, we print a message and set the simulation to end
+*/
+
 void	ft_surveillance(t_data *d)
 {
 	int	i;
@@ -35,9 +43,6 @@ void	ft_surveillance(t_data *d)
 	}
 }
 
-// here we check if any philo has died and count how many philos have eaten
-// we also check if the number of philos that have eaten is equal to the number
-// of philos, which would mean that we should end the simulation
 int	ft_dead_or_full(t_data *d, t_philo *p)
 {
 	pthread_mutex_lock(&d->mtx_eat);

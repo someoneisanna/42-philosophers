@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 16:53:36 by ataboada          #+#    #+#             */
-/*   Updated: 2023/08/06 15:22:47 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:37:17 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,18 @@ int		ft_should_simulation_end(t_philo *philo, int should_end);
 void	ft_print_status(t_philo *philo, char *str);
 void	ft_eat(t_philo *philo);
 
-// this is used to set the simulation to end
+/*
+	this is where all the simulation helper functions are
+	1) ft_should_simulation_end: used to check if the simulation should end
+		- here we assign 1 to the end_flag if we want to end the simulation
+		- we also return TRUE if the simulation should end and FALSE otherwise
+	2) ft_print_status: used to print the status of the philosopher
+		- if we don't pass a string, it means that all philosophers have eaten
+		  the number of times they should
+	3) ft_eat: this is the function where we simulate the philosopher eating
+		- reminder: the philosopher can only eat if he has both forks
+*/
+
 int	ft_should_simulation_end(t_philo *philo, int should_end)
 {
 	pthread_mutex_lock(&philo->data->mtx_end);
@@ -31,10 +42,6 @@ int	ft_should_simulation_end(t_philo *philo, int should_end)
 	return (FALSE);
 }
 
-// this is used to print the status of the philosopher (the sentences that are
-// printed in the subject)
-// if we don't pass a string, it means that all philosophers have eaten the
-// number of times they should
 void	ft_print_status(t_philo *philo, char *str)
 {
 	long long	timestamp;
@@ -50,8 +57,6 @@ void	ft_print_status(t_philo *philo, char *str)
 	pthread_mutex_unlock(&philo->data->mtx_print);
 }
 
-// this is the function where we simulate the philosopher eating
-// remember: the philosopher can only eat if he has both forks
 void	ft_eat(t_philo *philo)
 {
 	if (philo->id % 2 == 0)

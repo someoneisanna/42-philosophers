@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:29:02 by ataboada          #+#    #+#             */
-/*   Updated: 2023/08/06 15:27:33 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:45:29 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 # define TRUE 1
 # define FALSE 0
+
+// ---------------------------------- STRUCTS ----------------------------------
 
 typedef struct s_philo
 {
@@ -66,8 +68,8 @@ void		*ft_start_simulation(void *philo);
 
 // ----------------------------- 3_surveillance.c ------------------------------
 
-void		ft_surveillance(t_data *data);
-int			ft_dead_or_full(t_data *data, t_philo *philo);
+void		ft_surveillance(t_data *d);
+int			ft_dead_or_full(t_data *d, t_philo *p);
 
 // ---------------------------- 4_simulation_utils.c ---------------------------
 

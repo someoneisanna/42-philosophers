@@ -22,9 +22,6 @@ SRCS = sources/1_main.c \
 		sources/5_utils.c
 S_OBJS = $(SRCS:.c=.o)
 
-BONUS_SRCS =
-B_OBJS = $(BONUS_SRCS:.c=.o)
-
 # -------------------------------RULES---------------------------------
 
 .PHONY: all clean fclean re
