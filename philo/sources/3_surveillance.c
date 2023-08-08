@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:10:36 by ataboada          #+#    #+#             */
-/*   Updated: 2023/08/08 10:42:55 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:18:52 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_dead_or_full(t_data *d, t_philo *p)
 		if (d->n_philo_full == d->n_philo)
 		{
 			ft_should_simulation_end(p, TRUE);
-			ft_print_status(p, "");
+			ft_print_status(p, NULL);
 			pthread_mutex_unlock(&d->mtx_eat);
 			return (TRUE);
 		}

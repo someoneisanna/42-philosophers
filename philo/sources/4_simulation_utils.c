@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 16:53:36 by ataboada          #+#    #+#             */
-/*   Updated: 2023/08/08 10:37:17 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:19:50 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_print_status(t_philo *philo, char *str)
 		printf("%lld %d %s\n", timestamp, philo->id, str);
 	}
 	if (str == NULL)
-		printf("All philos have eaten %d times\n", philo->data->times_must_eat);
+		printf("All philosophers ate %d times\n", philo->data->times_must_eat);
 	pthread_mutex_unlock(&philo->data->mtx_print);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:24:38 by ataboada          #+#    #+#             */
-/*   Updated: 2023/08/08 10:27:22 by ataboada         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:12:00 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_initialize_thread(t_data *data);
 void	*ft_start_simulation(void *philo);
 
 /*
-	here all of the struct variables are being initialized and the threads being created
+	here the struct variables are being initialized and the threads being created
 	1) we initialize the data struct and check if the arguments are correct
 	2) we initialize the mutexes that are in the data struct
 	3) we initialize the philo struct
