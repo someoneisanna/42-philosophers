@@ -6,12 +6,14 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:29:02 by ataboada          #+#    #+#             */
-/*   Updated: 2023/08/08 10:45:29 by ataboada         ###   ########.fr       */
+/*   Updated: 2024/01/16 16:16:35 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
+
+// -------------------------------- INCLUDES -----------------------------------
 
 # include <string.h>
 # include <stdio.h>
@@ -20,21 +22,22 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-# define TRUE 1
-# define FALSE 0
+// -------------------------------- DEFINES ------------------------------------
 
-// ---------------------------------- STRUCTS ----------------------------------
+# define YES		1
+# define NO			0
+
+// -------------------------------- STRUCTS ------------------------------------
 
 typedef struct s_philo
 {
 	int				id;
-	int				fork_left;
-	int				fork_right;
+	int				fork_l;
+	int				fork_r;
 	int				times_eaten;
-	long long		last_eaten;
-	struct s_data	*data;
+	long long		started_eating;
 	pthread_t		thread;
-
+	struct s_data	*data;
 }	t_philo;
 
 typedef struct s_data
@@ -43,45 +46,39 @@ typedef struct s_data
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				times_must_eat;
+	int				n_meals;
 	int				n_philo_full;
-	int				end_flag;
+	int				n_philo_dead;
 	long long		start_time;
+	pthread_mutex_t	eat_mtx;
+	pthread_mutex_t	print_mtx;
+	pthread_mutex_t	*fork_mtx;
 	t_philo			*philo;
-	pthread_mutex_t	*mtx_fork;
-	pthread_mutex_t	mtx_print;
-	pthread_mutex_t	mtx_eat;
-	pthread_mutex_t	mtx_end;
 }	t_data;
 
-// --------------------------------- 1_main.c ----------------------------------
+// ------------------------------- PROTOTYPES ----------------------------------
 
+// main.c
 void		ft_check_args(int ac, char **av);
 
-// ---------------------------- 2_initializations.c ----------------------------
+// init.c
+void		ft_initialize_data(int ac, char **av, t_data *d);
+void		ft_initialize_mutexes(t_data *d);
+void		ft_initialize_philos(t_data *d);
+void		ft_initialize_threads(t_data *d);
 
-void		ft_initialize_data(t_data *data, int ac, char **av);
-void		ft_initialize_mtxs(t_data *data);
-void		ft_initialize_philo(t_data *data);
-void		ft_initialize_thread(t_data *data);
-void		*ft_start_simulation(void *philo);
+// simulation.c
+void		*ft_routine(void *ptr);
+void		ft_eat(t_philo *p);
+int			ft_should_simulation_end(t_philo *p);
+int			ft_philo_monitor(t_data *d);
+int			ft_philo_checker(t_data *d, t_philo *p);
 
-// ----------------------------- 3_surveillance.c ------------------------------
-
-void		ft_surveillance(t_data *d);
-int			ft_dead_or_full(t_data *d, t_philo *p);
-
-// ---------------------------- 4_simulation_utils.c ---------------------------
-
-int			ft_should_simulation_end(t_philo *philo, int should_end);
-void		ft_print_status(t_philo *philo, char *str);
-void		ft_eat(t_philo *philo);
-
-// --------------------------------- 5_utils.c ---------------------------------
-
-int			ft_atoi(const char *str);
-void		ft_perror(char *str, t_data *data, int flag);
-void		ft_free_mtxs(t_data *data);
-long long	ft_get_current_time(void);
+// utils.c
+int			ft_atoi(char *s);
+void		ft_perror(t_data *d, char *s, int free_flag);
+void		ft_pstatus(t_philo *p, char *m, int dead_or_full);
+long long	ft_time_now(void);
+void		ft_free_simulation(t_data *d);
 
 #endif

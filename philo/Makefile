@@ -10,16 +10,16 @@ RESET = \033[0m
 NAME = philo
 
 CC = cc
-CFLAGS = -pthread -Wall -Wextra -Werror -g
+CFLAGS = -pthread -Wall -Wextra -Werror -g #-fsanitize=thread
 
 RM = rm -f
 MAKE = make --no-print-directory
 
-SRCS = sources/1_main.c \
-		sources/2_initializations.c \
-		sources/3_surveillance.c \
-		sources/4_simulation_utils.c \
-		sources/5_utils.c
+SRCS = srcs/main.c \
+		srcs/init.c \
+		srcs/simulation.c \
+		srcs/utils.c
+
 S_OBJS = $(SRCS:.c=.o)
 
 # -------------------------------RULES---------------------------------
@@ -43,5 +43,6 @@ clean:
 fclean: clean
 	@$(RM) $(NAME)
 	@printf "$(RED)	Executable ./$(NAME) was removed.\n$(RESET)"
+	@clear
 
 re: fclean all

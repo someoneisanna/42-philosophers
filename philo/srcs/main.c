@@ -6,35 +6,35 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:38:15 by ataboada          #+#    #+#             */
-/*   Updated: 2023/08/08 10:14:55 by ataboada         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:47:18 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-int		main(int argc, char **argv);
+int		main(int ac, char **av);
 void	ft_check_args(int ac, char **av);
 
-/*
-	here is the function that starts the program
-	1) we check if the arguments are correct
-		- the arguments must be numbers
-		- there must be 4 or 5 arguments
-	2) we initialize the variables of the data structure
-		- in ft_initialize_thread we create the threads that make the program work
-	3) lastly, we free everything that we have allocated
-*/
-
-int	main(int argc, char **argv)
+int	main(int ac, char **av)
 {
 	t_data	data;
 
-	ft_check_args(argc, argv);
-	ft_initialize_data(&data, argc, argv);
-	ft_initialize_philo(&data);
-	ft_initialize_mtxs(&data);
-	ft_initialize_thread(&data);
-	ft_free_mtxs(&data);
+	ft_check_args(ac, av);
+	ft_initialize_data(ac, av, &data);
+	ft_initialize_mutexes(&data);
+	ft_initialize_philos(&data);
+	if (data.n_philo == 1)
+	{
+		ft_pstatus(data.philo, "has taken a fork", 0);
+		usleep(data.time_to_die * 1000);
+		if (data.n_meals == 0)
+			ft_pstatus(data.philo, NULL, YES);
+		else
+			ft_pstatus(data.philo, "died", 0);
+	}
+	else
+		ft_initialize_threads(&data);
+	ft_free_simulation(&data);
 }
 
 void	ft_check_args(int ac, char **av)
@@ -61,7 +61,7 @@ void	ft_check_args(int ac, char **av)
 			if (av[i][j] == '-')
 				j++;
 			if (av[i][j] < '0' || av[i][j] > '9')
-				ft_perror("Error: Arguments must be numbers\n", NULL, 0);
+				ft_perror(NULL, "Error: Arguments must be numbers\n", 0);
 		}
 	}
 }
