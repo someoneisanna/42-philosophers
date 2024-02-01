@@ -10,7 +10,7 @@ RESET = \033[0m
 NAME = philo
 
 CC = cc
-CFLAGS = -pthread -Wall -Wextra -Werror -g #-fsanitize=thread
+CFLAGS = -pthread -Wall -Wextra -Werror -g -fsanitize=thread
 
 RM = rm -f
 MAKE = make --no-print-directory

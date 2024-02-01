@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:29:02 by ataboada          #+#    #+#             */
-/*   Updated: 2024/01/16 16:16:35 by ataboada         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:24:44 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		ft_initialize_threads(t_data *d);
 
 // simulation.c
 void		*ft_routine(void *ptr);
-void		ft_eat(t_philo *p);
+void		ft_eat(t_philo *p, int fork_1, int fork_2);
 int			ft_should_simulation_end(t_philo *p);
 int			ft_philo_monitor(t_data *d);
 int			ft_philo_checker(t_data *d, t_philo *p);
