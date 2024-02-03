@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:03:38 by ataboada          #+#    #+#             */
-/*   Updated: 2024/02/03 21:16:49 by ataboada         ###   ########.fr       */
+/*   Updated: 2024/02/03 22:11:20 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	*ft_routine(void *ptr)
 			break ;
 		ft_pstatus(p, "is sleeping", 0);
 		usleep(p->data->time_to_sleep * 1000);
+		if (ft_should_simulation_end(p) == YES)
+			break ;
 		ft_pstatus(p, "is thinking", 0);
 	}
 	return (NULL);
@@ -68,7 +70,7 @@ int	ft_should_simulation_end(t_philo *p)
 	pthread_mutex_lock(&p->data->eat_mtx);
 	if (p->data->n_philo_dead > 0)
 		should_end = YES;
-	if (p->times_eaten == p->data->n_meals)
+	if (p->data->n_philo_full >= p->data->n_philo)
 		should_end = YES;
 	pthread_mutex_unlock(&p->data->eat_mtx);
 	return (should_end);
@@ -93,7 +95,7 @@ int	ft_philo_monitor(t_data *d)
 	return (0);
 }
 
-int ft_philo_checker(t_data *d, t_philo *p)
+int	ft_philo_checker(t_data *d, t_philo *p)
 {
 	pthread_mutex_lock(&d->eat_mtx);
 	if (ft_time_now() - p->started_eating >= d->time_to_die)
@@ -103,7 +105,7 @@ int ft_philo_checker(t_data *d, t_philo *p)
 		pthread_mutex_unlock(&d->eat_mtx);
 		return (YES);
 	}
-	if (d->n_philo_full == d->n_philo)
+	if (d->n_philo_full >= d->n_philo)
 	{
 		ft_pstatus(p, NULL, 2);
 		pthread_mutex_unlock(&d->eat_mtx);

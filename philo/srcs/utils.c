@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 13:25:42 by ataboada          #+#    #+#             */
-/*   Updated: 2024/01/16 16:14:20 by ataboada         ###   ########.fr       */
+/*   Updated: 2024/02/03 22:10:36 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_pstatus(t_philo *p, char *m, int dead_or_full)
 	else if (dead_or_full == 2)
 		printf("All philosophers have eaten %d times\n", p->data->n_meals);
 	else if (p->data->n_philo_dead == 0)
-			printf("%lld %d %s\n", time, p->id, m);
+		printf("%lld %d %s\n", time, p->id, m);
 	pthread_mutex_unlock(&p->data->print_mtx);
 }
 
