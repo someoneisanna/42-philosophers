@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:03:38 by ataboada          #+#    #+#             */
-/*   Updated: 2024/02/01 15:24:37 by ataboada         ###   ########.fr       */
+/*   Updated: 2024/02/03 21:16:49 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	*ft_routine(void *ptr)
 	t_philo		*p;
 
 	p = (t_philo *)ptr;
-	if (p->id % 2 == 0)
-		usleep(p->data->time_to_eat * 1000);
 	while (1)
 	{
 		if (ft_should_simulation_end(p) == YES)
@@ -45,8 +43,8 @@ void	*ft_routine(void *ptr)
 void	ft_eat(t_philo *p, int fork_1, int fork_2)
 {
 	pthread_mutex_lock(&p->data->fork_mtx[fork_1]);
-	pthread_mutex_lock(&p->data->fork_mtx[fork_2]);
 	ft_pstatus(p, "has taken a fork", 0);
+	pthread_mutex_lock(&p->data->fork_mtx[fork_2]);
 	ft_pstatus(p, "has taken a fork", 0);
 	ft_pstatus(p, "is eating", 0);
 	pthread_mutex_lock(&p->data->eat_mtx);
