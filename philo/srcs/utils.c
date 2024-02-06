@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 13:25:42 by ataboada          #+#    #+#             */
-/*   Updated: 2024/02/03 22:10:36 by ataboada         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:47:17 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int			ft_atoi(char *s);
 void		ft_perror(t_data *d, char *s, int free_flag);
-void		ft_pstatus(t_philo *p, char *m, int dead_or_full);
 long long	ft_time_now(void);
+void		ft_pstatus(t_philo *p, char *m, int dead_or_full);
 void		ft_free_simulation(t_data *d);
 
 int	ft_atoi(char *s)
@@ -56,25 +56,6 @@ void	ft_perror(t_data *d, char *s, int free_flag)
 	exit (1);
 }
 
-void	ft_pstatus(t_philo *p, char *m, int dead_or_full)
-{
-	long long	time;
-
-	pthread_mutex_lock(&p->data->print_mtx);
-	time = ft_time_now() - p->data->start_time;
-	if (dead_or_full == 1)
-	{
-		printf("%lld %d %s\n", time, p->id, m);
-		pthread_mutex_unlock(&p->data->print_mtx);
-		return ;
-	}
-	else if (dead_or_full == 2)
-		printf("All philosophers have eaten %d times\n", p->data->n_meals);
-	else if (p->data->n_philo_dead == 0)
-		printf("%lld %d %s\n", time, p->id, m);
-	pthread_mutex_unlock(&p->data->print_mtx);
-}
-
 long long	ft_time_now(void)
 {
 	struct timeval	time;
@@ -83,13 +64,33 @@ long long	ft_time_now(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
+void	ft_pstatus(t_philo *p, char *m, int dead_or_full)
+{
+	t_data		*d;
+	long long	time;
+
+	d = p->data;
+	time = ft_time_now() - p->data->start_time;
+	pthread_mutex_lock(&p->data->print_mtx);
+	if (dead_or_full == 0 && p->data->print_flag == 0)
+		printf("%lld %d %s\n", time, p->id, m);
+	else if (dead_or_full == 1 || dead_or_full == 2)
+	{
+		p->data->print_flag = 1;
+		if (dead_or_full == 1)
+			printf("%lld %d died\n", time, p->id);
+		else if (dead_or_full == 2)
+			printf("All philosophers ate %d times\n", d->n_meals);
+	}
+	pthread_mutex_unlock(&p->data->print_mtx);
+}
+
 void	ft_free_simulation(t_data *d)
 {
 	int	i;
 
 	i = -1;
 	free(d->philo);
-	pthread_mutex_destroy(&d->eat_mtx);
 	pthread_mutex_destroy(&d->print_mtx);
 	while (++i < d->n_philo)
 		pthread_mutex_destroy(&d->fork_mtx[i]);

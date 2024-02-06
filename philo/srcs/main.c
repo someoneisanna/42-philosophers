@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1_main.c                                           :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:38:15 by ataboada          #+#    #+#             */
-/*   Updated: 2024/01/16 14:47:18 by ataboada         ###   ########.fr       */
+/*   Updated: 2024/02/06 11:51:00 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ int	main(int ac, char **av)
 	ft_initialize_philos(&data);
 	if (data.n_philo == 1)
 	{
-		ft_pstatus(data.philo, "has taken a fork", 0);
-		usleep(data.time_to_die * 1000);
 		if (data.n_meals == 0)
-			ft_pstatus(data.philo, NULL, YES);
+			ft_pstatus(data.philo, NULL, 2);
 		else
+		{
+			ft_pstatus(data.philo, "has taken a fork", 0);
+			usleep(data.time_to_die * 1000);
 			ft_pstatus(data.philo, "died", 0);
+		}
 	}
 	else
 		ft_initialize_threads(&data);

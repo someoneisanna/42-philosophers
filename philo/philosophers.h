@@ -6,7 +6,7 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:29:02 by ataboada          #+#    #+#             */
-/*   Updated: 2024/02/01 15:24:44 by ataboada         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:41:53 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_philo
 	int				fork_l;
 	int				fork_r;
 	int				times_eaten;
+	int				is_full;
 	long long		started_eating;
 	pthread_t		thread;
 	struct s_data	*data;
@@ -47,10 +48,11 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				n_meals;
-	int				n_philo_full;
 	int				n_philo_dead;
+	int				n_philo_full;
+	int				print_flag;
 	long long		start_time;
-	pthread_mutex_t	eat_mtx;
+	pthread_mutex_t death_mtx;
 	pthread_mutex_t	print_mtx;
 	pthread_mutex_t	*fork_mtx;
 	t_philo			*philo;
@@ -70,9 +72,9 @@ void		ft_initialize_threads(t_data *d);
 // simulation.c
 void		*ft_routine(void *ptr);
 void		ft_eat(t_philo *p, int fork_1, int fork_2);
-int			ft_should_simulation_end(t_philo *p);
+int			ft_death_checker(t_data *d);
 int			ft_philo_monitor(t_data *d);
-int			ft_philo_checker(t_data *d, t_philo *p);
+int			ft_philo_checker(t_data *d, int i);
 
 // utils.c
 int			ft_atoi(char *s);
