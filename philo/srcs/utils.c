@@ -6,16 +6,16 @@
 /*   By: ataboada <ataboada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 13:25:42 by ataboada          #+#    #+#             */
-/*   Updated: 2024/02/06 13:47:17 by ataboada         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:32:47 by ataboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
 int			ft_atoi(char *s);
-void		ft_perror(t_data *d, char *s, int free_flag);
+int			ft_perror(t_data *d, char *s, int free_flag);
 long long	ft_time_now(void);
-void		ft_pstatus(t_philo *p, char *m, int dead_or_full);
+void		ft_pstatus(t_philo *p, char *m);
 void		ft_free_simulation(t_data *d);
 
 int	ft_atoi(char *s)
@@ -43,7 +43,7 @@ int	ft_atoi(char *s)
 	return (sig * res);
 }
 
-void	ft_perror(t_data *d, char *s, int free_flag)
+int	ft_perror(t_data *d, char *s, int free_flag)
 {
 	printf("%s", s);
 	if (free_flag == 1)
@@ -53,7 +53,7 @@ void	ft_perror(t_data *d, char *s, int free_flag)
 		free(d->philo);
 		free(d->fork_mtx);
 	}
-	exit (1);
+	return (1);
 }
 
 long long	ft_time_now(void)
@@ -64,24 +64,13 @@ long long	ft_time_now(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void	ft_pstatus(t_philo *p, char *m, int dead_or_full)
+void	ft_pstatus(t_philo *p, char *m)
 {
-	t_data		*d;
 	long long	time;
 
-	d = p->data;
 	time = ft_time_now() - p->data->start_time;
 	pthread_mutex_lock(&p->data->print_mtx);
-	if (dead_or_full == 0 && p->data->print_flag == 0)
-		printf("%lld %d %s\n", time, p->id, m);
-	else if (dead_or_full == 1 || dead_or_full == 2)
-	{
-		p->data->print_flag = 1;
-		if (dead_or_full == 1)
-			printf("%lld %d died\n", time, p->id);
-		else if (dead_or_full == 2)
-			printf("All philosophers ate %d times\n", d->n_meals);
-	}
+	printf("%lld Philosopher %d %s\n", time, p->id, m);
 	pthread_mutex_unlock(&p->data->print_mtx);
 }
 
